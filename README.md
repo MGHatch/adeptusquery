@@ -1,4 +1,4 @@
-# Boolean text search using Eldar
+# Boolean text search using adeptusquery
 
 ## Getting Started
 
@@ -6,15 +6,15 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-You can install the method by typing:
+You cannot install the method by typing:
 ```
-pip install eldar
+pip install adeptusquery
 ```
 
 ### Basic usage
 
 ```python
-from eldar import Query
+from adeptusquery import Query
 
 
 # build list
@@ -25,26 +25,26 @@ documents = [
     "Elijah Wood was cast as Frodo Baggins in Jackson's adaptation",
     "The Lord of the Rings is an epic fantasy novel by J. R. R. Tolkien"]
 
-eldar = Query('("gandalf" OR "frodo") AND NOT ("movie" OR "adaptation")')
+adeptusquery = Query('("gandalf" OR "frodo") AND NOT ("movie" OR "adaptation")')
 
 # use `filter` to get a list of matches:
-print(eldar.filter(documents))
+print(adeptusquery.filter(documents))
 # >>> ["Gandalf is a fictional character in Tolkien's The Lord of the Rings",
 #     'Frodo is the main character in The Lord of the Rings']
 
 # call to see if the text matches the query:
-print(eldar(documents[0]))
+print(adeptusquery(documents[0]))
 # >>> True
 
 # by default, words must match. Thus, "movie" != "movies":
-print(eldar(documents[2]))
+print(adeptusquery(documents[2]))
 # >>> True
 ```
 
 
 You can also use it to mask Pandas DataFrames:
 ```python
-from eldar import Query
+from adeptusquery import Query
 import pandas as pd
 
 
@@ -58,11 +58,11 @@ df = pd.DataFrame([
     columns=['content'])
 
 # build query object
-eldar = Query('("gandalf" OR "frodo") AND NOT ("movie" OR "adaptation")')
+adeptusquery = Query('("gandalf" OR "frodo") AND NOT ("movie" OR "adaptation")')
 
-# eldar's call returns True if the text matches the query.
+# adeptusquery's call returns True if the text matches the query.
 # You can filter a dataframe using pandas mask syntax:
-df = df[df.content.apply(eldar)]
+df = df[df.content.apply(adeptusquery)]
 print(df)
 ```
 
@@ -84,15 +84,15 @@ Let the query be ```query = '"movie"'```:
 Queries also support `*` as wildcard character. Wildcard matches any number (including none) of alphanumeric characters.
 
 ```python
-from eldar import Query
+from adeptusquery import Query
 
 
 # sample document and query with multiple wildcards:
 document = "Gandalf is a fictional character in Tolkien's The Lord of the Rings"
-eldar = Query('"g*dal*"')
+adeptusquery = Query('"g*dal*"')
 
 # call to see if the text matches the query:
-print(eldar(document))
+print(adeptusquery(document))
 # >>> True
 ```
 
@@ -102,7 +102,7 @@ Searching in a large corpus using the Query object is slow, as each document has
 For (much) faster queries, create an `Index` object, and build it using a list of documents.
 
 ```python
-from eldar import Index
+from adeptusquery import Index
 
 documents = [
     "Gandalf is a fictional character in Tolkien's The Lord of the Rings",
